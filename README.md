@@ -44,7 +44,7 @@ The following procedure should get you started with a clean running RISC-V Assem
 - Iverilog
   - Follow the [guide](https://iverilog.fandom.com/wiki/Getting_Started)
 
-### Fibonacci Sequence in RISC-V Assembly by Cristian Miranda 
+## Fibonacci Sequence in RISC-V Assembly by Cristian Miranda 
 
 Such that each number is the sum of the two preceding ones, starting from 0 and 1. [Ref](https://en.wikipedia.org/wiki/Fibonacci_number)
 
@@ -111,3 +111,22 @@ vvp test
 gtkwave test.vcd
 ```
 
+## PWM C program to RISC-V Assembly by Cristian Miranda 
+
+### Run The Compiler
+
+**compile.sh** script will:
+
+- Compile the Start.S program
+- Compile the C program
+- Assemble your program with the Start.S
+- Get the binary mahine code 
+- Get the HEX file for Verilog techbench
+- Print the dumped file
+- Print the number of instructions
+
+```sh
+./compile.sh c_program/PWM.c
+```
+
+### Then Repet Run the Simulator & Check the Waveform
