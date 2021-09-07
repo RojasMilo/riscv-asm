@@ -26,7 +26,6 @@ riscv64-unknown-elf-objdump -D ./dumped_files/exe.elf > ./dumped_files/boot.dump
 # Get the binary machine code
 riscv64-unknown-elf-objcopy -O binary ./dumped_files/exe.elf ./dumped_files/prog.bin
 
-
 # Get the hex file for verilog techbench
 od -t x4 -An -w4 -v ./dumped_files/prog.bin > ./dumped_files/boot.mem
 

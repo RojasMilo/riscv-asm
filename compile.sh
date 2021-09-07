@@ -7,12 +7,10 @@
 if [ ! -d dumped_files ]; then
   mkdir dumped_files
 fi
-linker="./progInC/ram.lds"
-start="./progInC/start.S"
-if [ ! -z $2 ]; then
-	linker=$2
-	start="./progInC/start_bus.S"
-fi
+
+linker="./c_program/start/ram.lds"
+start="./c_program/start/start.S"
+
 
 # Compile the progInC (just a dummy progInC)
 riscv64-unknown-elf-gcc -c $start -o ./dumped_files/start.o -march=rv32im -mabi=ilp32
@@ -35,14 +33,20 @@ riscv64-unknown-elf-objdump -D ./dumped_files/boot.elf -M no-aliases,numeric > .
 
 riscv64-unknown-elf-objdump -D ./dumped_files/boot.elf > ./dumped_files/boot.dump
 
+
 # Get the binary machine code
 riscv64-unknown-elf-objcopy -O binary ./dumped_files/boot.elf ./dumped_files/boot.bin
 
-# Get the silly hex file for verilog techbench
-od -t x4 -An -w4 -v ./dumped_files/boot.bin > boot.mem
+# Get the hex file for verilog techbench
+od -t x4 -An -w4 -v ./dumped_files/boot.bin > ./dumped_files/boot.mem
 
 cat ./dumped_files/boot.dump
-echo "the number of instructions its: "
-< boot.mem wc -l
-cp boot.mem ../testbench/ncsim_tb/ram.mem
-cp boot.mem ../testbench/ncsim_tb/boot.mem
+
+echo "------------------------------------------------"
+
+cat ./dumped_files/boot.mem
+echo "The number of instructions its: "
+< ./dumped_files/boot.mem wc -l
+
+cp ./dumped_files/boot.mem ./verilog/ram.mem
+cp ./dumped_files/boot.mem ./verilog/boot.mem
